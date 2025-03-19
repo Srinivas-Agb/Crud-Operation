@@ -1,90 +1,21 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
-    margin: 0;
-}
-
-form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    text-align: center;
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    margin: 10px 0 5px;
-}
-
-input {
-    width: 90%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 button {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
+    background: rgb(23, 162, 184); /* Calmer teal shade */
 }
 
 button:hover {
-    background: #218838;
-}
-
-#table {
-    margin-top: 20px;
-    width: 100%;
-    background: white;
-    border-collapse: collapse;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
+    background: rgb(19, 132, 150);
 }
 
 th {
-    background: #007bff;
-    color: white;
+    background: rgb(0, 86, 179); /* Deeper blue for table headers */
 }
 
-td button {
-    background: #ffc107;
-    color: black;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+input {
+    background-color: lightgray;
+    border: 1px solid gray;
 }
 
-td button:hover {
-    background: #e0a800;
-}
-
-td button:nth-child(2) {
-    background: #dc3545;
-    color: white;
-}
-
-td button:nth-child(2):hover {
-    background: #c82333;
+input:focus {
+    border-color: rgb(0, 86, 179);
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
 }
