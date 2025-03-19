@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* Import Google Font */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* Background with subtle gradient */
+      body {
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      /* Container with glassmorphism effect */
+      .container {
+        width: 500px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        color: white;
+        text-align: center;
+      }
+
+      /* Heading */
+      h2 {
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      /* Input Fields */
+      .input-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      .input-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .input-group input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .input-group input:focus {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Add Employee Button */
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: #ff7eb3;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #ff5c99;
+        transform: scale(1.05);
+      }
+
+      /* Table Styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+      }
+
+      th {
+        background: rgba(255, 255, 255, 0.3);
+        color: white;
+      }
+
+      td {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+      }
+
+      /* Buttons for Edit & Delete */
+      .edit-btn,
+      .delete-btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .edit-btn {
+        background: #ffcd38;
+        color: black;
+      }
+
+      .edit-btn:hover {
+        background: #ffb400;
+        transform: scale(1.05);
+      }
+
+      .delete-btn {
+        background: #ff5252;
+        color: white;
+      }
+
+      .delete-btn:hover {
+        background: #e63946;
+        transform: scale(1.05);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        .container {
+          width: 90%;
+          padding: 20px;
+        }
+
+        th,
+        td {
+          padding: 10px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Enter Employee Details</h2>
+      <form id="employeeForm">
+        <div class="input-group">
+          <label>Employee ID</label>
+          <input type="number" id="empId" required />
+        </div>
+        <div class="input-group">
+          <label>Name</label>
+          <input type="text" id="empName" required />
+        </div>
+        <div class="input-group">
+          <label>Role</label>
+          <input type="text" id="empRole" required />
+        </div>
+        <div class="input-group">
+          <label>Salary</label>
+          <input type="number" id="empSalary" required />
+        </div>
+        <button type="submit">Add Employee</button>
+      </form>
+
+      <table id="employeeTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Salary</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be added here dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("employeeForm");
+        const table = document
+          .getElementById("employeeTable")
+          .getElementsByTagName("tbody")[0];
+
+        let editRow = null;
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const empId = document.getElementById("empId").value.trim();
+          const empName = document.getElementById("empName").value.trim();
+          const empRole = document.getElementById("empRole").value.trim();
+          const empSalary = document.getElementById("empSalary").value.trim();
+
+          if (!empId || !empName || !empRole || !empSalary) {
+            alert("All fields are required!");
+            return;
+          }
+
+          if (editRow) {
+            // Update existing row
+            editRow.cells[0].innerText = empId;
+            editRow.cells[1].innerText = empName;
+            editRow.cells[2].innerText = empRole;
+            editRow.cells[3].innerText = empSalary;
+            editRow = null;
+            form.querySelector("button").innerText = "Add Employee";
+          } else {
+            // Prevent duplicate IDs
+            if (
+              [...table.rows].some((row) => row.cells[0].innerText === empId)
+            ) {
+              alert("Employee ID must be unique!");
+              return;
+            }
+
+            // Add new row
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                        <td>${empId}</td>
+                        <td>${empName}</td>
+                        <td>${empRole}</td>
+                        <td>${empSalary}</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    `;
+          }
+
+          form.reset();
+        });
+
+        table.addEventListener("click", (event) => {
+          if (event.target.classList.contains("edit-btn")) {
+            editRow = event.target.parentElement.parentElement;
+            document.getElementById("empId").value = editRow.cells[0].innerText;
+            document.getElementById("empName").value =
+              editRow.cells[1].innerText;
+            document.getElementById("empRole").value =
+              editRow.cells[2].innerText;
+            document.getElementById("empSalary").value =
+              editRow.cells[3].innerText;
+            form.querySelector("button").innerText = "Update Employee";
+          }
+
+          if (event.target.classList.contains("delete-btn")) {
+            event.target.parentElement.parentElement.remove();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
